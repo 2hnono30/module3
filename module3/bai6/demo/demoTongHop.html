@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bai tap tong hop</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: lightgray;
+        }
+
+        nav {
+            background-color: lightsteelblue;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul>li>a {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+        }
+
+        nav ul>li>a:hover {
+            background-color: rgb(27, 72, 233);
+            color: white;
+            text-decoration: underline;
+        }
+
+        .subcontent {
+            display: none;
+            position: absolute;
+            background-color: lightsteelblue;
+            width: 200px;
+            z-index: 1;
+        }
+
+        .submenu:hover .subcontent {
+            display: block;
+        }
+
+        div.item {
+            width: 32%;
+            margin: 0.5%;
+            background-color: darkorange;
+            border: 2px solid lightgray;
+            padding: 5px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        div.label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: gold;
+            padding: 10px 20px;
+            border-radius: 0 10px;
+            animation: doimau 2s infinite;
+        }
+        @keyframes doimau {
+            from {
+                background-color: rgb(246, 242, 23);
+            }
+
+            to {
+                background-color: rgb(25, 207, 239);
+            }
+        }
+
+        div.item img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform .5s;
+        }
+
+        div.item img:hover {
+            transform: scale(1.2);
+        }
+
+        div.items {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        ul.menu>li {
+            max-width: 200px;
+            border-right: 1px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul class="menu">
+            <li><a href="#">Trang Chủ</a></li>
+            <li class="submenu">
+                <a href="#">Danh mục môn học</a>
+                <ul class="subcontent">
+                    <li><a href="#">JavaCore</a></li>
+                    <li><a href="#">HTML</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Diễn đàn</a></li>
+            <li class="submenu">
+                <a href="#">Liên hệ</a>
+                <ul class="subcontent">
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">SMS</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <section class="monhocs">
+        <div class="items">
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+                <div class="label">NEW</div>
+            </div>
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+            </div>
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+            </div>
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+            </div>
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+            </div>
+            <div class="item">
+                <h1>JavaCore</h1>
+                <div>
+                    <img src="img\ed56aa80-7279-11e9-84ef-140cf1950eb8.png" alt="demo">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
