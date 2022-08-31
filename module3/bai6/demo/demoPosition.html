@@ -35,6 +35,30 @@
           
             opacity: 0.8; /* opacity : số (0-1) (giống visibility, nhưng ẩn đi theo dạng mờ dần); */
         }
+        div.AB{
+            width: 24%;
+            height: 200px;
+            border: 2px dashed grey;
+            display: inline-block;
+            position: relative;}
+        div.A{
+            width: 24%;
+            height: 30px;
+            border: 2px dashed grey;
+            display: inline-block; 
+            /* position: absolute; */
+            position: relative;
+          
+        }
+        div.B{
+            width: 24%;
+            height: 30px;
+            border: 2px dashed grey;
+            display: inline-block; 
+            /* left: 30px; */
+            /* position: relative; */
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +71,10 @@
         <div>ABC</div>
     </div>
     <h1>ABC</h1>
+    <div class="AB">
+            <div class="A">A</div>
+            <div class="B">B</div>
+    </div>
     <div class="go">
         <a href="#">Go To top</a>
     </div>
