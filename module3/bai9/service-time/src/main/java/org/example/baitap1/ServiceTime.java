@@ -1,4 +1,4 @@
-package org.example;
+package org.example.baitap1;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
