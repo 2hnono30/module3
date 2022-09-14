@@ -14,15 +14,15 @@
         <legend>Customer information</legend>
         <table>
             <tr>
-                <td>Name: </td>
+                <td>Name:</td>
                 <td>${requestScope["customer"].getName()}</td>
             </tr>
             <tr>
-                <td>Email: </td>
+                <td>Email:</td>
                 <td>${requestScope["customer"].getEmail()}</td>
             </tr>
             <tr>
-                <td>Address: </td>
+                <td>Address:</td>
                 <td>${requestScope["customer"].getAddress()}</td>
             </tr>
             <tr>
@@ -30,5 +30,6 @@
             </tr>
         </table>
     </fieldset>
+</form>
 </body>
 </html>

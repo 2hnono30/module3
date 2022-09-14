@@ -8,19 +8,23 @@
 <p>
     <a href="/customers">Back to customer list</a>
 </p>
-<table>
-    <tr>
-        <td>Name: </td>
-        <td>${requestScope["customer"].getName()}</td>
-    </tr>
-    <tr>
-        <td>Email: </td>
-        <td>${requestScope["customer"].getEmail()}</td>
-    </tr>
-    <tr>
-        <td>Address: </td>
-        <td>${requestScope["customer"].getAddress()}</td>
-    </tr>
-</table>
+<form method="post">
+    <fieldset>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>${requestScope["customer"].getName()}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>${requestScope["customer"].getEmail()}</td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>${requestScope["customer"].getAddress()}</td>
+            </tr>
+            </table>
+    </fieldset>
+</form>
 </body>
 </html>

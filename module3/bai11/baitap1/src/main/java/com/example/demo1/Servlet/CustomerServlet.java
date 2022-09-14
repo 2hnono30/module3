@@ -153,7 +153,7 @@ public class CustomerServlet extends HttpServlet {
         } else {
             this.customerService.remove(id);
             try {
-                resp.sendRedirect("/customer");
+                resp.sendRedirect("/customers");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
