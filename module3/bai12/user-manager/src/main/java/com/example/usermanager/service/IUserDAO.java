@@ -11,6 +11,7 @@ public interface IUserDAO {
     public User selectUser(int id);
 
     public List<User> selectAllUsers();
+    void addUserTransaction(User user, int[] permision);
 
     public boolean deleteUser(int id) throws SQLException;
 
