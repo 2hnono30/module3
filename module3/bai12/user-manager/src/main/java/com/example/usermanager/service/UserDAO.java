@@ -1,13 +1,12 @@
 package com.example.usermanager.service;
+
 import com.example.usermanager.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class UserServletImplMysql implements IUserDAO{
+public class UserDAO implements IUserDAO{
     private String jdbcURL = "jdbc:mysql://localhost:3306/usermanager?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
@@ -17,8 +16,9 @@ public class UserServletImplMysql implements IUserDAO{
     private static final String SELECT_ALL_USERS = "select * from users";
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
-    protected static Map<Integer, User> users;
-    public UserServletImplMysql() {
+
+
+    public UserDAO() {
     }
 
     protected Connection getConnection() {
@@ -37,7 +37,7 @@ public class UserServletImplMysql implements IUserDAO{
     }
 
     @Override
-    public void insertUser(com.example.usermanager.model.User user) throws SQLException {
+    public void insertUser(User user) throws SQLException {
         System.out.println(INSERT_USERS_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
@@ -46,6 +46,7 @@ public class UserServletImplMysql implements IUserDAO{
             preparedStatement.setString(3, user.getCountry());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -69,7 +70,7 @@ public class UserServletImplMysql implements IUserDAO{
 
 
     @Override
-    public com.example.usermanager.model.User selectUser(int id) {
+    public User selectUser(int id) {
         com.example.usermanager.model.User user = null;
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
@@ -146,5 +147,77 @@ public class UserServletImplMysql implements IUserDAO{
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        User user = null;
+
+        String query = "{CALL get_user_by_id(?)}";
+
+        // Step 1: Establishing a Connection
+
+        try (Connection connection = getConnection();
+
+             // Step 2:Create a statement using connection object
+
+             CallableStatement callableStatement = connection.prepareCall(query);) {
+
+            callableStatement.setInt(1, id);
+
+            // Step 3: Execute the query or update query
+
+            ResultSet rs = callableStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+
+            while (rs.next()) {
+
+                String name = rs.getString("name");
+
+                String email = rs.getString("email");
+
+                String country = rs.getString("country");
+
+                user = new User(id, name, email, country);
+
+            }
+
+        } catch (SQLException e) {
+
+            printSQLException(e);
+
+        }
+
+        return user;
+
+    }
+
+    @Override
+    public void insertUserStore(User user) throws SQLException {
+        String query = "{CALL insert_user(?,?,?)}";
+
+        // try-with-resource statement will auto close the connection.
+
+        try (Connection connection = getConnection();
+
+             CallableStatement callableStatement = connection.prepareCall(query);) {
+
+            callableStatement.setString(1, user.getName());
+
+            callableStatement.setString(2, user.getEmail());
+
+            callableStatement.setString(3, user.getCountry());
+
+            System.out.println(callableStatement);
+
+            callableStatement.executeUpdate();
+
+        } catch (SQLException e) {
+
+            printSQLException(e);
+
+        }
+
     }
 }

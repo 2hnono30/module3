@@ -1,6 +1,7 @@
 package com.example.usermanager.controller;
 
-import com.example.usermanager.service.UserServletImplMysql;
+import com.example.usermanager.model.User;
+import com.example.usermanager.service.UserDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,10 +16,10 @@ import java.util.List;
 @WebServlet(name = "UserServlet",urlPatterns = "/users")
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private UserServletImplMysql userDAO;
+    private UserDAO userDAO;
 
     public void init() {
-        userDAO = new UserServletImplMysql();
+        userDAO = new UserDAO();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -85,10 +86,12 @@ public class UserServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        com.example.usermanager.model.User existingUser = userDAO.selectUser(id);
+//        User existingUser = userDAO.selectUser(id);
+        User existingUser = userDAO.getUserById(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
+
 
     }
 
@@ -98,7 +101,8 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String country = request.getParameter("country");
         com.example.usermanager.model.User newUser = new com.example.usermanager.model.User(name, email, country);
-        userDAO.insertUser(newUser);
+//        userDAO.insertUser(newUser);
+        userDAO.insertUserStore(newUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -126,4 +130,5 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         dispatcher.forward(request, response);
     }
+
 }
