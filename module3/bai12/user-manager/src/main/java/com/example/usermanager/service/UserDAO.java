@@ -95,7 +95,7 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public List<com.example.usermanager.model.User> selectAllUsers() {
+    public List<User> selectAllUsers() {
 
         // using try-with-resources to avoid closing resources (boiler plate code)
         List<com.example.usermanager.model.User> users = new ArrayList<>();
