@@ -70,6 +70,18 @@
                                         <input type="input" id="idAddress" name="address" class="form-control" value="${requestScope["customer"].getAddress()}">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 control-label" for="idCountry">Country</label>
+                                    <div class="col-md-10">
+                                        <select type="input" id="idCountry" name="idCountry" class="form-control" value="${requestScope["customer"].getIdCountry()}">
+                                            <option>VN</option>
+                                            <option>TQ</option>
+                                            <option>HQ</option>
+                                            <option>Campuchia</option>
+                                            <option>Thai</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <button>Edit</button>
                             </form>
                             <!-- end row -->

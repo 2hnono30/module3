@@ -1,8 +1,8 @@
 package com.example.casestudy.controller;
 
-import com.example.casestudy.model.Customer;
-import com.example.casestudy.service.CustomerService;
-import com.example.casestudy.service.CustomerServiceImplMysql;
+import com.example.casestudy.model.Country;
+import com.example.casestudy.service.CountryService;
+import com.example.casestudy.service.CountryServicelmpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,12 +15,15 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "CustomerServlet", urlPatterns = "/customers")
-public class CustomerServlet extends HttpServlet implements Serializable {
-    CustomerService customerService;
+@WebServlet(name = "CountryServlet", urlPatterns = "/countrys")
+public class CountryServlet extends HttpServlet implements Serializable {
+    CountryService countryServlet;
+    CountryService countryService;
+    List<Country> countries;
+
     @Override
     public void init() throws ServletException {
-        customerService = new CustomerServiceImplMysql();
+        countryServlet = new CountryServicelmpl();
 
     }
 
@@ -32,14 +35,14 @@ public class CustomerServlet extends HttpServlet implements Serializable {
         switch (action){
             case "create":
                 try {
-                    createCustomer(request, response);
+                    createCountry(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 break;
             case "edit":
                 try {
-                    updateCustomer(request, response);
+                    updateCountry(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -67,7 +70,7 @@ public class CustomerServlet extends HttpServlet implements Serializable {
                 break;
             case "delete":
                 try {
-                    deleteCustomer(request,response);
+                    deleteCountry(request,response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -76,7 +79,7 @@ public class CustomerServlet extends HttpServlet implements Serializable {
                 break;
             default:
                 try {
-                    listCustomers(request, response);
+                    listCountry(request, response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -86,10 +89,10 @@ public class CustomerServlet extends HttpServlet implements Serializable {
 
 
 
-    private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        List<Customer> customers = this.customerService.findAll();
-        request.setAttribute("customers", customers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/list.jsp");
+    private void listCountry(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        List<Country> countrys = this.countryServlet.findAllCountry();
+        request.setAttribute("countrys", countrys);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/country/countryList.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -99,7 +102,7 @@ public class CustomerServlet extends HttpServlet implements Serializable {
         }
     }
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/country/create.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -108,36 +111,14 @@ public class CustomerServlet extends HttpServlet implements Serializable {
             e.printStackTrace();
         }
     }
-    private void createCustomer(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String address = request.getParameter("address");
+    private void createCountry(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+
         int id = (int)(Math.random() * 10000);
-        int idCountry;
-        String choice = request.getParameter("idCountry");
-        switch (choice){
-            case "VN":
-                idCountry = 1;
-                break;
-            case "TQ":
-                idCountry = 2;
-                break;
-            case "HQ":
-                idCountry = 3;
-                break;
-            case "Campuchia":
-                idCountry = 4;
-                break;
-            case "Thai":
-                idCountry = 5;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + choice);
-        }
-        Customer customer = new Customer(id, name, email, address,idCountry);
-        this.customerService.save(customer);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/create.jsp");
-        request.setAttribute("message", "New customer was created");
+        String country = request.getParameter("country");
+        Country country1 = new Country(id,country);
+        this.countryServlet.save(country1);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/country/create.jsp");
+        request.setAttribute("message", "New country was created");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -148,13 +129,13 @@ public class CustomerServlet extends HttpServlet implements Serializable {
     }
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = this.customerService.findById(id);
+        Country country = this.countryServlet.findByIdCountry(id);
         RequestDispatcher dispatcher;
-        if(customer == null){
+        if(country == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         } else {
-            request.setAttribute("customer", customer);
-            dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/edit.jsp");
+            request.setAttribute("country", country);
+            dispatcher = request.getRequestDispatcher("/WEB-INF/country/edit.jsp");
         }
         try {
             dispatcher.forward(request, response);
@@ -164,43 +145,19 @@ public class CustomerServlet extends HttpServlet implements Serializable {
             e.printStackTrace();
         }
     }
-    private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    private void updateCountry(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String address = request.getParameter("address");
-        String choice = request.getParameter("country");
-        int country = 0;
-        switch (choice){
-            case "VN":
-                country = 1;
-                break;
-            case "TQ":
-                country = 2;
-                break;
-            case "HQ":
-                country = 3;
-                break;
-            case "Campuchia":
-                country = 4;
-                break;
-            case "Thai":
-                country = 5;
-                break;
-        }
-        Customer customer = this.customerService.findById(id);
+        String country = request.getParameter("country");
+        Country country1 = this.countryServlet.findByIdCountry(id);
         RequestDispatcher dispatcher;
-        if(customer == null){
+        if(country1 == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         } else {
-            customer.setName(name);
-            customer.setEmail(email);
-            customer.setAddress(address);
-            customer.setIdCountry(country);
-            this.customerService.update(id, customer);
-            request.setAttribute("customer", customer);
+            country1.setCountry(country);
+            this.countryServlet.updateCountry(id, country1);
+            request.setAttribute("customer", country1);
             request.setAttribute("message", "Customer information was updated");
-            dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/edit.jsp");
+            dispatcher = request.getRequestDispatcher("/WEB-INF/country/edit.jsp");
         }
         try {
             dispatcher.forward(request, response);
@@ -210,13 +167,13 @@ public class CustomerServlet extends HttpServlet implements Serializable {
             e.printStackTrace();
         }
     }
-    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
+    private void deleteCountry(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
-        customerService.remove(id);
-        List<Customer> listCustomer = customerService.findAll();
-        request.setAttribute("customers", listCustomer);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer1/list.jsp");
+        countryServlet.removeCountry(id);
+        List<Country> listCountry = countryServlet.findAllCountry();
+        request.setAttribute("countrys", listCountry);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/country/country.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -48,8 +48,8 @@ public class CustomerServiceImplMysql implements CustomerService {
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-
-                Customer cus = new Customer(id, name, email, address);
+                int idCountry = rs.getInt("country");
+                Customer cus = new Customer(id, name, email, address,idCountry);
                 list.add(cus);
             }
             connection.close();
@@ -61,7 +61,7 @@ public class CustomerServiceImplMysql implements CustomerService {
 
     @Override
     public void save(Customer customer) throws SQLException {
-        String INSERT_CUSTOMER = "INSERT INTO c5_customermanager.customer(name, email, address) VALUES (?, ?, ?)";
+        String INSERT_CUSTOMER = "INSERT INTO c5_customermanager.customer(name, email, address, country) VALUES (?, ?, ?, ?)";
 
         try (
                 Connection connection = getConnection();
@@ -70,6 +70,7 @@ public class CustomerServiceImplMysql implements CustomerService {
             preparedStatement.setString(1, customer.getName());
             preparedStatement.setString(2, customer.getEmail());
             preparedStatement.setString(3, customer.getAddress());
+            preparedStatement.setInt(4,customer.getIdCountry());
 
             System.out.println(this.getClass() + " save : " + preparedStatement);
             preparedStatement.execute();
@@ -94,8 +95,9 @@ public class CustomerServiceImplMysql implements CustomerService {
             String name = rs.getString("name");
             String email = rs.getString("email");
             String address = rs.getString("address");
+            int country = rs.getInt("country");
 
-            Customer cus = new Customer(id1, name, email, address);
+            Customer cus = new Customer(id1, name, email, address,country);
             return cus;
         }
         return null;
@@ -103,7 +105,7 @@ public class CustomerServiceImplMysql implements CustomerService {
 
     @Override
     public void update(int id, Customer customer) throws SQLException {
-        String SP_UPDATE_CUSTOMER = "call c5_customermanager.sp_updatecustomer(?, ?, ?, ?)";
+        String SP_UPDATE_CUSTOMER = "call c5_customermanager.sp_updatecustomer(?, ?, ?, ?, ?)";
         try (
                 Connection connection = getConnection();
                 CallableStatement callableStatement = connection.prepareCall(SP_UPDATE_CUSTOMER);
@@ -112,6 +114,7 @@ public class CustomerServiceImplMysql implements CustomerService {
             callableStatement.setString(2, customer.getName());
             callableStatement.setString(3, customer.getEmail());
             callableStatement.setString(4, customer.getAddress());
+            callableStatement.setInt(5,customer.getIdCountry());
 
             System.out.println(this.getClass() + " update: " + callableStatement);
             callableStatement.execute();

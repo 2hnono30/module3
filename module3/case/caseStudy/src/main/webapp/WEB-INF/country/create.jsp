@@ -51,35 +51,11 @@
                             <div class="col-sm-12">
                                 <div class="card-box">
                                     <h4 class="header-title">Input Types</h4>
-                                    <form class="form-horizontal" method="post" action="/customers?action=create">
-                                        <div class="form-group row">
-                                            <label class="col-md-2 control-label">Name</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2 control-label" for="idEmail">Email</label>
-                                            <div class="col-md-10">
-                                                <input type="email" id="idEmail" name="email" class="form-control" placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2 control-label" for="idAddress">Address</label>
-                                            <div class="col-md-10">
-                                                <input type="input" id="idAddress" name="address" class="form-control" placeholder="Address">
-                                            </div>
-                                        </div>
+                                    <form class="form-horizontal" method="post" action="/countrys?action=create">
                                         <div class="form-group row">
                                             <label class="col-md-2 control-label" for="idCountry">Country</label>
                                             <div class="col-md-10">
-                                                <select id="idCountry" name="idCountry" class="form-control" >
-                                                    <option>VN</option>
-                                                    <option>TQ</option>
-                                                    <option>HQ</option>
-                                                    <option>Campuchia</option>
-                                                    <option>Thai</option>
-                                                </select>
+                                                <input id="idCountry" name="country" class="form-control" placeholder="Country">
                                             </div>
                                         </div>
                                         <button>Create</button>

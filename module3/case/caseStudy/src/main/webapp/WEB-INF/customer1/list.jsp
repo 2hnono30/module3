@@ -64,6 +64,7 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Address</th>
+                                                <th>Country</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
@@ -73,9 +74,10 @@
                                                    <td>${item.getName()}</td>
                                                    <td>${item.getEmail()}</td>
                                                    <td>${item.getAddress()}</td>
+                                                   <td>${item.getIdCountry()}</td>
                                                    <td>
-                                                       <label style="width: 50px"><a href="/customers?action=edit&&id=${item.getId()}"><i class="ion ion-md-create"></i></a></label>
-                                                       <label></label><a href="/customers?action=delete&&id=${item.getId()}"><i class="ion ion-md-trash"></i></a></label>
+                                                       <button style="width: 30px;border-radius: 5px"><a href="/customers?action=edit&&id=${item.getId()}"><i class="ion ion-md-create"></i></a></button>
+                                                       <button style="width: 30px;border-radius: 5px"><a href="/customers?action=delete&&id=${item.getId()}"><i class="ion ion-md-trash"></i></a></button>
                                                    </td>
                                                </tr>
                                            </c:forEach>
