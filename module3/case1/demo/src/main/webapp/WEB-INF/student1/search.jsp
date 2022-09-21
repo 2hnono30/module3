@@ -63,10 +63,9 @@
                                     <tr>
                                         <th>StudentId</th>
                                         <th>Name</th>
-                                        <th>DOB</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Address</th>
+                                        <th>Classroom</th>
+                                        <th>Grade</th>
+                                        <th>Specialized</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -74,11 +73,10 @@
                                     <c:forEach items="${studentList}" var="item">
                                         <tr>
                                             <td>${item.getId()}</td>
-                                            <td>${item.getName()}</td>
-                                            <td>${item.getDob()}</td>
-                                            <td>${item.getPhone()}</td>
-                                            <td>${item.getEmail()}</td>
-                                            <td>${item.getAddress()}</td>
+                                            <td><a href="/students?action=view&&id=${item.getId()}">${item.getName()}</a></td>
+                                            <td>${item.getClassroom()}</td>
+                                            <td>${item.getGrade()}</td>
+                                            <td>${item.getSpecialized()}</td>
                                             <td>
                                                 <button style="width: 30px;border-radius: 5px" aria-label="edit"><a href="/students?action=edit&&id=${item.getId()}"><i class="ion ion-md-create"></i></a></button>
                                                 <button style="width: 30px;border-radius: 5px" aria-label="remove"><a href="/students?action=delete&&id=${item.getId()}"><i class="ion ion-md-trash"></i></a></button>

@@ -47,11 +47,10 @@ public class StudentServiceImplMysql implements StudentService {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("StudentName");
-                String dob = rs.getString("dob");
-                String phone = rs.getString("phone");
-                String email = rs.getString("email");
-                String address = rs.getString("address");
-                Student student = new Student(id, name, dob, phone, email, address);
+                String classroom = rs.getString("class");
+                String grade = rs.getString("grade");
+                String specialized = rs.getString("specialized");
+                Student student = new Student(id, name, classroom,grade,specialized);
                 list.add(student);
             }
             connection.close();
@@ -103,11 +102,10 @@ public class StudentServiceImplMysql implements StudentService {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("StudentName");
-                String dob = resultSet.getString("DOB");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                Student student = new Student(id, name, dob,phone, email, address);
+                String classroom = resultSet.getString("class");
+                String grade = resultSet.getString("grade");
+                String specialized = resultSet.getString("specialized");
+                Student student = new Student(id, name, classroom,grade, specialized);
                 list.add(student);
             }
         } catch (SQLException e) {
@@ -126,11 +124,10 @@ public class StudentServiceImplMysql implements StudentService {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("StudentName");
-                String dob = resultSet.getString("DOB");
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                Student student = new Student(id, name, dob,phone, email, address);
+                String classroom = resultSet.getString("class");
+                String grade = resultSet.getString("grade");
+                String specialized = resultSet.getString("specialized");
+                Student student = new Student(id, name,classroom,grade,specialized);
                 list.add(student);
             }
         } catch (SQLException e) {
@@ -140,18 +137,21 @@ public class StudentServiceImplMysql implements StudentService {
     }
     @Override
     public void save(Student student) throws SQLException {
-        String INSERT_STUDENT = "INSERT INTO students_case.students (StudentName, DOB, Phone, email, address,image) VALUES (?, ?, ?, ?, ?, ?)";
+        String INSERT_STUDENT = "INSERT INTO students_case.students (StudentName, DOB, Phone, email, address,image,Class,Grade,Specialized) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
                 Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT);
         ) {
             preparedStatement.setString(1, student.getName());
-            preparedStatement.setString(2, student.getEmail());
-            preparedStatement.setString(3, student.getDob());
-            preparedStatement.setString(4, student.getPhone());
+            preparedStatement.setString(2, student.getDob());
+            preparedStatement.setString(3, student.getPhone());
+            preparedStatement.setString(4, student.getEmail());
             preparedStatement.setString(5, student.getAddress());
             preparedStatement.setString(6, student.getImage());
+            preparedStatement.setString(7,student.getClassroom());
+            preparedStatement.setString(8,student.getGrade());
+            preparedStatement.setString(9,student.getSpecialized());
 
             System.out.println(this.getClass() + " save : " + preparedStatement);
             preparedStatement.execute();
@@ -179,9 +179,11 @@ public class StudentServiceImplMysql implements StudentService {
             String email = rs.getString("email");
             String address = rs.getString("address");
             String image = rs.getString("image");
+            String classroom = rs.getString("class");
+            String grade = rs.getString("grade");
+            String specialized = rs.getString("Specialized");
 
-
-            Student cus = new Student(id1, name, dob, phone, email, address,image);
+            Student cus = new Student(id1, name, dob, phone, email, address,image,classroom,grade,specialized);
             return cus;
         }
         return null;
@@ -189,7 +191,7 @@ public class StudentServiceImplMysql implements StudentService {
 
     @Override
     public void update(int id, Student student) throws SQLException {
-        String SP_UPDATE_CUSTOMER = "call students_case.sp_updateStudent(?, ?, ?, ?, ?, ?, ?);";
+        String SP_UPDATE_CUSTOMER = "call students_case.sp_updateStudent(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (
                 Connection connection = getConnection();
@@ -202,6 +204,9 @@ public class StudentServiceImplMysql implements StudentService {
             callableStatement.setString(5, student.getEmail());
             callableStatement.setString(6, student.getAddress());
             callableStatement.setString(7, student.getImage());
+            callableStatement.setString(8, student.getClassroom());
+            callableStatement.setString(9, student.getGrade());
+            callableStatement.setString(10, student.getSpecialized());
 
             System.out.println(this.getClass() + " update: " + callableStatement);
             callableStatement.execute();

@@ -36,7 +36,7 @@
 
           <div class="card-body">
 
-            <form action="/login" method="post">
+            <form method="post">
 
               <div class="form-group">
                 <label>UserName :</label>

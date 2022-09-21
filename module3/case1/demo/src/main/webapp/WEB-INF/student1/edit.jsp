@@ -61,13 +61,37 @@
                                 <div class="form-group row">
                                     <label class="col-md-2 control-label" for="inputGroupFile01">Upload Image</label>
                                     <div class="col-md-10">
-                                        <input type="file" class="form-control" id="inputGroupFile01" name="image" required value="${requestScope["student"].getImage()}">
+                                        <input type="file" class="form-control" id="inputGroupFile01" name="image"  value="${requestScope["student"].getImage()}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" hidden>
+                                    <label class="col-md-2 control-label" for="inputGroupFile02">Upload Image</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="inputGroupFile02" name="image1" required value="${requestScope["student"].getImage()}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 control-label">Dob</label>
                                     <div class="col-md-10">
                                         <input type="dob" class="form-control" name="dob" value="${requestScope["student"].getDob()}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 control-label" for="idClassroom">Classroom</label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="idClassroom" name="classroom" class="form-control" value="${requestScope["student"].getClassroom()}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 control-label" for="idGrade">Grade</label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="idGrade" name="grade" class="form-control" value="${requestScope["student"].getGrade()}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 control-label" for="idSpecialized">Specialized</label>
+                                    <div class="col-md-10">
+                                        <input type="idGrade" id="idSpecialized" name="specialized" class="form-control" value="${requestScope["student"].getSpecialized()}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -88,8 +112,10 @@
                                         <input type="input" id="idAddress" name="address" class="form-control" value="${requestScope["student"].getAddress()}">
                                     </div>
                                 </div>
+                                <div style="text-align: center">
                                 <button style="border-radius: 5px">Edit</button>
                                 <button style="border-radius: 5px"><a href="/students">Black</a></button>
+                                </div>
                             </form>
                             <!-- end row -->
 

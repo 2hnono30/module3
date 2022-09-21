@@ -9,7 +9,24 @@ public class Student {
     private String email;
     private String address;
     private String image;
+    private String classroom;
+    private String grade;
+    private String specialized;
+
     public Student() {
+    }
+
+    public Student(int id, String name, String dob, String phone, String email, String address, String image, String classroom, String grade, String specialized) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.image = image;
+        this.classroom = classroom;
+        this.grade = grade;
+        this.specialized = specialized;
     }
 
     public Student(int id, String name, String dob, String phone, String email, String address) {
@@ -29,6 +46,38 @@ public class Student {
         this.email = email;
         this.address = address;
         this.image = image;
+    }
+
+    public Student(int id, String name, String classroom, String grade, String specialized) {
+        this.id = id;
+        this.name = name;
+        this.classroom = classroom;
+        this.grade = grade;
+        this.specialized = specialized;
+    }
+
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getSpecialized() {
+        return specialized;
+    }
+
+    public void setSpecialized(String specialized) {
+        this.specialized = specialized;
     }
 
     public String getImage() {

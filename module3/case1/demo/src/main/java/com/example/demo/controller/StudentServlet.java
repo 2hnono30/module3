@@ -21,11 +21,11 @@ import java.util.List;
 @MultipartConfig()
 @WebServlet(name = "StudentServlet", urlPatterns = "/students")
 public class StudentServlet extends HttpServlet implements Serializable {
-    StudentServiceImplMysql studentService;
+    StudentServiceImplMysql studentServiceImplMysql;
 
     @Override
     public void init() throws ServletException {
-        studentService = new StudentServiceImplMysql();
+        studentServiceImplMysql = new StudentServiceImplMysql();
 
     }
 
@@ -91,7 +91,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
 
     private void showViewForm(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Student student = studentService.findById(id);
+        Student student = studentServiceImplMysql.findById(id);
         RequestDispatcher dispatcher;
         if (student == null) {
             dispatcher = request.getRequestDispatcher("error-404.jsp");
@@ -122,7 +122,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
 //    }
     private void listStudentPaging(HttpServletRequest request,HttpServletResponse response){
         try {
-            int count = studentService.getTotalStudent();
+            int count = studentServiceImplMysql.getTotalStudent();
             int endPage = count/10;
             if (count % 10 != 0){
                 endPage ++;
@@ -134,7 +134,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
                 indexPage ="1";
             }
             int index = Integer.parseInt(indexPage);
-            List<Student> studentList = studentService.pageStudent(index);
+            List<Student> studentList = studentServiceImplMysql.pageStudent(index);
             request.setAttribute("studentList",studentList);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/list.jsp");
             dispatcher.forward(request,response);
@@ -146,7 +146,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
     }
     private void searchName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         String name = request.getParameter("txtSearch");
-        int count = this.studentService.searchCount(name);
+        int count = this.studentServiceImplMysql.searchCount(name);
         int endPage = count / 10;
         if (count % 10 != 0) {
             endPage++;
@@ -162,7 +162,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
                 indexPage = "1";
             }
             int index = Integer.parseInt(indexPage);
-            List<Student> studentList = studentService.pageStudentSearch(index, name);
+            List<Student> studentList = studentServiceImplMysql.pageStudentSearch(index, name);
             request.setAttribute("studentList", studentList);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/search.jsp");
             dispatcher.forward(request, response);
@@ -186,6 +186,9 @@ public class StudentServlet extends HttpServlet implements Serializable {
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
+        String classroom = request.getParameter("classroom");
+        String grade = request.getParameter("grade");
+        String specialized = request.getParameter("specialized");
         int id = (int) (Math.random() * 10000);
         Part part =request.getPart("image");
         String realPath = request.getServletContext().getRealPath("/image");
@@ -195,8 +198,8 @@ public class StudentServlet extends HttpServlet implements Serializable {
         }
         part.write("G:\\module3\\module3\\case1\\demo\\src\\main\\webapp\\assets\\images\\studentImage\\" + filename);
         String image = "/assets/images/studentImage/" + filename;
-        Student student = new Student(id, name, dob, phone, email, address,image);
-        this.studentService.save(student);
+        Student student = new Student(id, name, dob, phone, email, address,image,classroom,grade,specialized);
+        this.studentServiceImplMysql.save(student);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/create.jsp");
         request.setAttribute("message", "New customer was created");
         try {
@@ -210,7 +213,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Student student = this.studentService.findById(id);
+        Student student = this.studentServiceImplMysql.findById(id);
         RequestDispatcher dispatcher;
         if (student == null) {
             dispatcher = request.getRequestDispatcher("error-404.jsp");
@@ -228,40 +231,52 @@ public class StudentServlet extends HttpServlet implements Serializable {
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        String image ;
         try {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String dob = request.getParameter("dob");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String address = request.getParameter("address");
-        Part part =request.getPart("image");
-        String realPath = request.getServletContext().getRealPath("/image");
-        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-        if(!Files.exists(Paths.get(realPath))){
-            Files.createDirectory(Paths.get(realPath));
-        }
-        part.write("G:\\module3\\module3\\case1\\demo\\src\\main\\webapp\\assets\\images\\studentImage\\" + filename);
-        String image = "/assets/images/studentImage/" + filename;
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String dob = request.getParameter("dob");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String address = request.getParameter("address");
+            String classroom = request.getParameter("classroom");
+            String grade = request.getParameter("grade");
+            String specialized = request.getParameter("specialized");
+            try {
+                Part part = request.getPart("image1");
+                String realPath = request.getServletContext().getRealPath("/image");
+                String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                if (!Files.exists(Paths.get(realPath))) {
+                    Files.createDirectory(Paths.get(realPath));
+                }
+                part.write("G:\\module3\\module3\\case1\\demo\\src\\main\\webapp\\assets\\images\\studentImage\\" + filename);
+                image = "/assets/images/studentImage/" + filename;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }catch (Exception e){image = request.getParameter("image1");}
 
-        Student student = this.studentService.findById(id);
-        RequestDispatcher dispatcher;
-        if (student == null) {
-            dispatcher = request.getRequestDispatcher("error-404.jsp");
-        } else {
-            student.setName(name);
-            student.setDob(dob);
-            student.setPhone(phone);
-            student.setEmail(email);
-            student.setAddress(address);
-            student.setImage(image);
+            Student student = this.studentServiceImplMysql.findById(id);
+            RequestDispatcher dispatcher;
+            if (student == null) {
+                dispatcher = request.getRequestDispatcher("error-404.jsp");
+            } else {
+                student.setName(name);
+                student.setDob(dob);
+                student.setPhone(phone);
+                student.setEmail(email);
+                student.setAddress(address);
+                student.setImage(image);
+                student.setClassroom(classroom);
+                student.setGrade(grade);
+                student.setSpecialized(specialized);
 
-            this.studentService.update(id, student);
-            request.setAttribute("student", student);
-            request.setAttribute("message", "Student information was updated");
-            dispatcher = request.getRequestDispatcher("/WEB-INF/student1/edit.jsp");
-        }
-
+                this.studentServiceImplMysql.update(id, student);
+                request.setAttribute("student", student);
+                request.setAttribute("message", "Student information was updated");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/student1/edit.jsp");
+            }
             dispatcher.forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
@@ -271,9 +286,9 @@ public class StudentServlet extends HttpServlet implements Serializable {
     }
 
     private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ServletException {
+            throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
-        studentService.remove(id);
+        studentServiceImplMysql.remove(id);
         listStudentPaging(request,response);
     }
 }

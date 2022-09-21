@@ -55,7 +55,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-2 control-label">Name</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" name="name" placeholder="Name">
+                                                <input type="text" class="form-control" name="name" placeholder="Name" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -71,13 +71,31 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-md-2 control-label" for="idClassroom" required>Classroom</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="idClassroom" name="classroom" class="form-control" placeholder="Classroom">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-2 control-label" for="idGrade" required>Grade</label>
+                                            <div class="col-md-10">
+                                                <input type="text" id="idGrade" name="grade" class="form-control" placeholder="Grade">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-2 control-label" for="idSpecialized" required>Specialized</label>
+                                            <div class="col-md-10">
+                                                <input type="idGrade" id="idSpecialized" name="specialized" class="form-control" placeholder="Specialized">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label class="col-md-2 control-label" for="idPhone">PHONE</label>
                                             <div class="col-md-10">
                                                 <input type="phone" id="idPhone" name="phone" class="form-control" placeholder="Phone">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-md-2 control-label" for="idEmail">Email</label>
+                                            <label class="col-md-2 control-label" for="idEmail" >Email</label>
                                             <div class="col-md-10">
                                                 <input type="email" id="idEmail" name="email" class="form-control" placeholder="Email">
                                             </div>
@@ -88,8 +106,11 @@
                                                 <input type="input" id="idAddress" name="address" class="form-control" placeholder="Address">
                                             </div>
                                         </div>
-                                        <button style="border-radius: 5px">Create</button>
-                                        <button style="border-radius: 5px"><a href="/students">Black</a></button>
+                                        <div style="text-align: center">
+                                            <button style="border-radius: 5px">Create</button>
+                                            <button style="border-radius: 5px"><a href="/students">Black</a></button>
+                                        </div>
+
                                     </form>
                                     <!-- end row -->
 
