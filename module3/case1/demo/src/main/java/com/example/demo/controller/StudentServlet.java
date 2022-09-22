@@ -191,7 +191,7 @@ public class StudentServlet extends HttpServlet implements Serializable {
         String specialized = request.getParameter("specialized");
         int id = (int) (Math.random() * 10000);
         Part part =request.getPart("image");
-        String realPath = request.getServletContext().getRealPath("/image");
+        String realPath = request.getServletContext().getRealPath("/images");
         String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         if(!Files.exists(Paths.get(realPath))){
             Files.createDirectory(Paths.get(realPath));
@@ -243,8 +243,8 @@ public class StudentServlet extends HttpServlet implements Serializable {
             String grade = request.getParameter("grade");
             String specialized = request.getParameter("specialized");
             try {
-                Part part = request.getPart("image1");
-                String realPath = request.getServletContext().getRealPath("/image");
+                Part part = request.getPart("image");
+                String realPath = request.getServletContext().getRealPath("/images");
                 String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 if (!Files.exists(Paths.get(realPath))) {
                     Files.createDirectory(Paths.get(realPath));

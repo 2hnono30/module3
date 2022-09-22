@@ -16,7 +16,7 @@
 <div id="wrapper">
 
   <!-- Navigation Bar-->
-  <jsp:include page="/layout/top_nav.jsp"></jsp:include>
+  <jsp:include page="/layout/top_navUser.jsp"></jsp:include>
   <!-- End Navigation Bar-->
 
   <!-- ============================================================== -->
@@ -62,7 +62,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${students}" var="item">
+                  <c:forEach items="${studentList}" var="item">
                     <tr>
                       <td>${item.getId()}</td>
                       <td>${item.getName()}</td>
@@ -77,7 +77,7 @@
                   <ul class="pagination">
                     <li class="page-item"><a class="page-link">Page: </a></li>
                     <c:forEach begin="1" end="${endPage}" var="index">
-                      <li class="page-item"><a class="page-link" href="/students?index=${index}">${index}</a></li>
+                      <li class="page-item"><a class="page-link" href="/users?index=${index}">${index}</a></li>
                     </c:forEach>
                   </ul>
                 </div>

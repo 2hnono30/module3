@@ -282,18 +282,18 @@
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
 
                 <li class="d-none d-sm-block">
-                    <form action="/students?action=search" class="app-search" method="post">
-                        <div class="app-search-box">
-                            <div class="input-group">
-                                <input type="text" name="txtSearch" class="form-control" placeholder="Search...">
-                                <div class="input-group-append">
-                                    <button class="btn" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                       <form action="/students?action=search" class="app-search" method="post">
+                           <div class="app-search-box">
+                               <div class="input-group">
+                                   <input type="text" name="txtSearch" class="form-control" placeholder="Search...">
+                                   <div class="input-group-append">
+                                       <button class="btn" type="submit">
+                                           <i class="fas fa-search"></i>
+                                       </button>
+                                   </div>
+                               </div>
+                           </div>
+                       </form>
                 </li>
             </ul>
             <div class="clearfix"></div>

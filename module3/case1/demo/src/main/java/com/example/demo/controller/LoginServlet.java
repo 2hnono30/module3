@@ -21,7 +21,6 @@ import java.util.List;
 public class LoginServlet extends HttpServlet {
     private UserService userService;
     StudentServiceImplMysql studentServiceImplMysql;
-    StudentServlet servlet = new StudentServlet();
 
     @Override
     public void init() throws ServletException {
@@ -31,15 +30,30 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/student1/login.jsp");
-        requestDispatcher.forward(req, resp);
+//        String action = req.getParameter("action");
+//        if (action == null) {
+//            action = "";
+//        }
+//        try {
+//            switch (action) {
+//                case "search":
+//                    searchName(req, resp);
+//                    break;
+//                default:
+//                    listProducts(req,resp);
+//                    break;
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
         if (userService.checkUsernamePassword(username, password)) {
             // Lưu vô session
 //            HttpSession httpSession = req.getSession();
@@ -54,79 +68,98 @@ public class LoginServlet extends HttpServlet {
             }
             if (username.equals("user")) {
                 roles.add("user");
-                List<Student> students = null;
-                students = this.studentServiceImplMysql.findAll();
-                userRoleRequestWrapper.setAttribute("students", students);
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
+//                listProducts(req,resp);
+//                String action = req.getParameter("action");
+//                if (action == null) {
+//                    action = "";
+//                }
+//                try {
+//                    switch (action) {
+//                        case "search":
+//                            searchName(req, resp);
+//                            break;
+//                    }
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users");
                 requestDispatcher.forward(userRoleRequestWrapper, resp);
-                String action = req.getParameter("action");
-                if (action == null) {
-                    action = "";
-                }
-                try {
-                    switch (action) {
-                        case "search":
-                            searchName(req, resp);
-                            break;
-                    }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
             }
-
-
-            ///resp.sendRedirect("/customers");
         } else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/student1/login.jsp");
             requestDispatcher.forward(req, resp);
         }
     }
-
-    private void searchName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-        String name = request.getParameter("txtSearch");
-        int count = this.studentServiceImplMysql.searchCount(name);
-        int endPage = count / 10;
-        if (count % 10 != 0) {
-            endPage++;
-        }
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("search", name);
-
-        if (name.isEmpty()) {
-            try {
-                count = studentServiceImplMysql.getTotalStudent();
-                endPage = count / 10;
-                if (count % 10 != 0) {
-                    endPage++;
-                }
-                request.setAttribute("endPage", endPage);
-
-                String indexPage = request.getParameter("index");
-                if (indexPage == null) {
-                    indexPage = "1";
-                }
-                int index = Integer.parseInt(indexPage);
-                List<Student> studentList = studentServiceImplMysql.pageStudent(index);
-                request.setAttribute("studentList", studentList);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
-                dispatcher.forward(request, response);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        } else {
-            String indexPage = request.getParameter("index");
-            if (indexPage == null) {
-                indexPage = "1";
-            }
-            int index = Integer.parseInt(indexPage);
-            List<Student> studentList = studentServiceImplMysql.pageStudentSearch(index, name);
-            request.setAttribute("studentList", studentList);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
-            dispatcher.forward(request, response);
-        }
-    }
+//private void listProducts(HttpServletRequest request, HttpServletResponse response){
+//    try {
+//        int count = studentServiceImplMysql.getTotalStudent();
+//        int endPage = count/10;
+//        if (count % 10 != 0){
+//            endPage ++;
+//        }
+//        request.setAttribute("endPage", endPage) ;
+//
+//        String indexPage = request.getParameter("index");
+//        if (indexPage == null){
+//            indexPage ="1";
+//        }
+//        int index = Integer.parseInt(indexPage);
+//        List<Student> studentList = studentServiceImplMysql.pageStudent(index);
+//        request.setAttribute("studentList",studentList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
+//        dispatcher.forward(request,response);
+//    } catch (ServletException e) {
+//        throw new RuntimeException(e);
+//    } catch (IOException e) {
+//        throw new RuntimeException(e);
+//    }
+//}
+//    private void searchName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+//        String name = request.getParameter("txtSearch");
+//        int count = this.studentServiceImplMysql.searchCount(name);
+//        int endPage = count / 10;
+//        if (count % 10 != 0) {
+//            endPage++;
+//        }
+//        request.setAttribute("endPage", endPage);
+//        request.setAttribute("search", name);
+//
+//        if (name.isEmpty()) {
+//            try {
+//                count = studentServiceImplMysql.getTotalStudent();
+//                endPage = count / 10;
+//                if (count % 10 != 0) {
+//                    endPage++;
+//                }
+//                request.setAttribute("endPage", endPage);
+//
+//                String indexPage = request.getParameter("index");
+//                if (indexPage == null) {
+//                    indexPage = "1";
+//                }
+//                int index = Integer.parseInt(indexPage);
+//                List<Student> studentList = studentServiceImplMysql.pageStudent(index);
+//                request.setAttribute("studentList", studentList);
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
+//                dispatcher.forward(request, response);
+//            } catch (ServletException e) {
+//                throw new RuntimeException(e);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        } else {
+//            String indexPage = request.getParameter("index");
+//            if (indexPage == null) {
+//                indexPage = "1";
+//            }
+//            int index = Integer.parseInt(indexPage);
+//            List<Student> studentList = studentServiceImplMysql.pageStudentSearch(index, name);
+//            request.setAttribute("studentList", studentList);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/student1/userList.jsp");
+//            dispatcher.forward(request, response);
+//        }
+//    }
 }
 
